@@ -1,0 +1,143 @@
+<!doctype html>
+<html lang="vi">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="theme-color" content="#090b0f">
+  <title>NOIR HOME | Smart Access</title>
+  <link rel="stylesheet" href="css/style.css">
+  <link rel="stylesheet" href="css/animations.css">
+</head>
+<body>
+  <div class="app-shell">
+    <aside class="sidebar">
+      <a class="brand" href="#" aria-label="NOIR HOME trang chủ">
+        <span class="brand-mark">N</span>
+        <span><strong>NOIR HOME</strong><small>SMART ACCESS SYSTEM</small></span>
+      </a>
+      <div class="sidebar-label">CONTROL CENTER</div>
+      <nav class="nav">
+        <a class="nav-item active" href="#overview"><span class="nav-icon">◈</span> Tổng quan</a>
+        <a class="nav-item" href="#access"><span class="nav-icon">▣</span> Truy cập cửa</a>
+        <a class="nav-item" href="#visitor"><span class="nav-icon">◉</span> Khách đến</a>
+        <a class="nav-item" href="#intercom"><span class="nav-icon">⌁</span> Intercom</a>
+        <a class="nav-item" href="#events"><span class="nav-icon">≡</span> Nhật ký sự kiện</a>
+      </nav>
+      <div class="sidebar-bottom">
+        <div class="system-status"><span class="status-dot"></span><span><b>Demo system</b><small>Chạy trên trình duyệt</small></span></div>
+        <p class="sidebar-note">Giao diện mô phỏng. Chưa kết nối khóa hoặc thiết bị an ninh thật.</p>
+      </div>
+    </aside>
+
+    <main class="main-content" id="overview">
+      <header class="topbar">
+        <div>
+          <div class="eyebrow">HOME SECURITY / CONTROL</div>
+          <h1>Không gian của bạn<span class="accent">.</span></h1>
+          <p class="subheading">Một điểm chạm để kiểm soát lối vào ngôi nhà.</p>
+        </div>
+        <div class="topbar-meta">
+          <div class="clock-block"><span id="current-time">--:--:--</span><small id="current-date">Đang tải ngày...</small></div>
+          <div class="avatar">NH</div>
+        </div>
+      </header>
+
+      <section class="status-grid" aria-label="Trạng thái hệ thống">
+        <article class="metric-card hero-metric">
+          <div class="metric-top"><span class="metric-label">TRẠNG THÁI CỬA</span><span class="mini-icon">⌑</span></div>
+          <div class="door-status-row"><div class="door-illustration" id="door-illustration"><span class="door-handle"></span></div><div><div class="metric-value" id="door-status">Đã khóa</div><div class="metric-caption" id="door-caption">Lối vào đang được bảo vệ</div></div></div>
+          <button class="button button-primary" id="main-door-toggle" type="button">Mở khóa demo <span>↗</span></button>
+          <div class="card-foot"><span class="status-dot"></span> <span id="door-footnote">Trạng thái mô phỏng an toàn</span></div>
+        </article>
+        <article class="metric-card">
+          <div class="metric-top"><span class="metric-label">NHIỆT ĐỘ</span><span class="mini-icon">⌁</span></div>
+          <div class="metric-value metric-large"><span id="temperature">27.2</span><small>°C</small></div>
+          <div class="metric-caption">Môi trường trong nhà</div>
+          <div class="metric-track"><span style="width:54%"></span></div>
+          <div class="metric-bottom"><span>Ổn định</span><span class="muted">Dữ liệu demo</span></div>
+        </article>
+        <article class="metric-card">
+          <div class="metric-top"><span class="metric-label">ĐỘ ẨM</span><span class="mini-icon">◌</span></div>
+          <div class="metric-value metric-large"><span id="humidity">48</span><small>%</small></div>
+          <div class="metric-caption">Độ ẩm tương đối</div>
+          <div class="metric-track humidity-track"><span style="width:48%"></span></div>
+          <div class="metric-bottom"><span>Bình thường</span><span class="muted">Dữ liệu demo</span></div>
+        </article>
+        <article class="metric-card connection-card">
+          <div class="metric-top"><span class="metric-label">KẾT NỐI</span><span class="mini-icon">⌘</span></div>
+          <div class="connection-state"><span class="status-dot" id="connection-dot"></span><span id="connection-status">Chưa kết nối</span></div>
+          <div class="metric-caption" id="connection-caption">Đang chạy ở chế độ giao diện độc lập</div>
+          <button class="button button-secondary button-small" id="connection-settings" type="button">Cấu hình kết nối</button>
+          <div class="metric-bottom"><span class="muted">Transport</span><span class="mono">Web API / MQTT*</span></div>
+        </article>
+      </section>
+
+      <section class="content-grid">
+        <article class="panel access-panel" id="access">
+          <div class="panel-header"><div><div class="eyebrow">ACCESS MANAGEMENT</div><h2>Truy cập cửa</h2></div><span class="panel-tag">DEMO</span></div>
+          <p class="panel-description">Nhập mã PIN để thử luồng xác thực giao diện. Mã demo mặc định: <code>123456</code>.</p>
+          <div class="keypad-layout">
+            <div class="pin-display-wrap"><label for="pin-display">MÃ TRUY CẬP</label><div class="pin-display" id="pin-display" aria-live="polite"> <span class="pin-placeholder">Nhập PIN</span> </div><p class="inline-feedback" id="pin-feedback" aria-live="polite">Mã PIN chỉ dùng để mô phỏng.</p></div>
+            <div class="keypad" id="keypad" aria-label="Bàn phím số">
+              <button type="button" data-key="1">1</button><button type="button" data-key="2">2</button><button type="button" data-key="3">3</button>
+              <button type="button" data-key="4">4</button><button type="button" data-key="5">5</button><button type="button" data-key="6">6</button>
+              <button type="button" data-key="7">7</button><button type="button" data-key="8">8</button><button type="button" data-key="9">9</button>
+              <button type="button" class="key-secondary" data-action="clear">C</button><button type="button" data-key="0">0</button><button type="button" class="key-enter" data-action="submit" aria-label="Xác nhận PIN">↵</button>
+            </div>
+          </div>
+          <div class="access-actions"><button class="button button-secondary" id="pin-clear" type="button">Xóa mã</button><button class="button button-primary" id="pin-submit" type="button">Xác thực PIN <span>→</span></button></div>
+        </article>
+
+        <article class="panel visitor-panel" id="visitor">
+          <div class="panel-header"><div><div class="eyebrow">VISITOR MONITOR</div><h2>Khách đến</h2></div><span class="live-pill"><i></i> SIMULATED</span></div>
+          <div class="camera-frame">
+            <div class="camera-grid"></div><div class="camera-corner corner-tl"></div><div class="camera-corner corner-tr"></div><div class="camera-corner corner-bl"></div><div class="camera-corner corner-br"></div>
+            <div class="camera-placeholder"><div class="camera-symbol">◉</div><strong>Camera chưa kết nối</strong><span>Chế độ xem trước mô phỏng</span></div>
+            <span class="camera-label">FRONT DOOR / CAM 01</span><span class="camera-time" id="camera-time">--:--:--</span>
+          </div>
+          <div class="visitor-actions"><div><strong id="visitor-state">Không có khách mới</strong><p id="visitor-detail">Chờ sự kiện chuông cửa mô phỏng.</p></div><button class="button button-secondary" id="simulate-visitor" type="button">Mô phỏng chuông <span>↗</span></button></div>
+        </article>
+      </section>
+
+      <section class="content-grid lower-grid">
+        <article class="panel intercom-panel" id="intercom">
+          <div class="panel-header"><div><div class="eyebrow">TWO-WAY COMMUNICATION</div><h2>Intercom</h2></div><span class="panel-tag">LOCAL DEMO</span></div>
+          <div class="intercom-visual"><div class="sound-ring ring-one"></div><div class="sound-ring ring-two"></div><div class="intercom-orb">⌁</div></div>
+          <div class="intercom-copy"><strong id="intercom-status">Liên lạc đang chờ</strong><p id="intercom-description">Micro và loa chưa được kết nối với thiết bị.</p></div>
+          <div class="intercom-actions"><button class="button button-primary" id="talk-toggle" type="button">Bắt đầu phiên demo</button><button class="button button-secondary" id="talk-end" type="button" disabled>Kết thúc</button></div>
+          <p class="safety-note">Không ghi âm hoặc truyền âm thanh thật trong bản giao diện này.</p>
+        </article>
+
+        <article class="panel events-panel" id="events">
+          <div class="panel-header"><div><div class="eyebrow">ACTIVITY HISTORY</div><h2>Nhật ký sự kiện</h2></div><button class="text-button" id="clear-events" type="button">Xóa nhật ký</button></div>
+          <div class="event-list" id="event-list" aria-live="polite"></div>
+          <div class="events-footer"><span id="event-count">0 sự kiện</span><span class="muted">Lưu trong phiên trình duyệt</span></div>
+        </article>
+      </section>
+
+      <footer class="footer"><span>© 2026 NOIR HOME · SMART ACCESS CONCEPT</span><span>Thiết kế mô phỏng · Không điều khiển khóa thật</span></footer>
+    </main>
+  </div>
+
+  <dialog class="modal" id="connection-modal">
+    <form method="dialog" class="modal-card" id="connection-form">
+      <div class="panel-header"><div><div class="eyebrow">DEVICE CONFIGURATION</div><h2>Cấu hình kết nối</h2></div><button class="icon-button" value="cancel" aria-label="Đóng">×</button></div>
+      <p class="panel-description">Thiết lập endpoint cho giai đoạn tích hợp firmware. Bản demo hiện chưa gửi lệnh đến endpoint này.</p>
+      <label class="field-label" for="endpoint-input">Web API endpoint (tùy chọn)</label>
+      <input id="endpoint-input" class="text-input" type="url" placeholder="http://192.168.1.100/api" autocomplete="url">
+      <label class="field-label" for="transport-select">Giao thức dự kiến</label>
+      <select id="transport-select" class="text-input"><option value="http">HTTP / REST</option><option value="mqtt">MQTT (qua backend hoặc WebSocket broker)</option><option value="simulated">Chỉ mô phỏng</option></select>
+      <p class="form-feedback" id="connection-feedback">Chưa có kết nối thực. Không nhập thông tin bí mật tại đây.</p>
+      <div class="modal-actions"><button class="button button-secondary" value="cancel" type="submit">Hủy</button><button class="button button-primary" id="save-connection" value="default" type="button">Lưu cấu hình demo</button></div>
+    </form>
+  </dialog>
+  <div class="toast" id="toast" role="status" aria-live="polite"></div>
+  <script src="js/communication.js"></script>
+  <script src="js/eventLog.js"></script>
+  <script src="js/door.js"></script>
+  <script src="js/keypad.js"></script>
+  <script src="js/visitor.js"></script>
+  <script src="js/intercom.js"></script>
+  <script src="js/app.js"></script>
+</body>
+</html>

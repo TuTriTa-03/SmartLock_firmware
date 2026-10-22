@@ -1,0 +1,6 @@
+@keyframes rise-in { from { opacity: 0; transform: translateY(5px); } to { opacity: 1; transform: translateY(0); } }
+@keyframes soft-pulse { 0%, 100% { box-shadow: 0 0 0 0 #6ee7b700; } 50% { box-shadow: 0 0 0 7px #6ee7b714; } }
+@keyframes ring-breathe { 0%, 100% { transform: scale(.96); opacity: .18; } 50% { transform: scale(1.04); opacity: .5; } }
+.status-dot { animation: soft-pulse 2.8s ease-in-out infinite; }
+.ring-one { animation: ring-breathe 3.2s ease-in-out infinite; }
+.ring-two { animation: ring-breathe 3.2s ease-in-out infinite reverse; }
