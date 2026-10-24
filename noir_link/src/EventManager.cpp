@@ -1,26 +1,33 @@
-#include <Arduino.h>
+
 #include "EventManager.h"
+#include "SerialLogger.h"
 
 void EventManager::recordEvent(EventType event)
 {
-    switch(event) {
+    switch (event)
+    {
         case EventType::DOOR_LOCKED:
-            Serial.println("EVEN: Door locked");
+            serialLog("[EVENT] Door locked");
             break;
 
         case EventType::DOOR_UNLOCKED:
-            Serial.println("EVENT: Door unlocked");
+            serialLog("[EVENT] Door unlocked");
             break;
 
         case EventType::AUTH_SUCCESS:
-            Serial.println("EVENT: Authentication successful");
+            serialLog("[EVENT] Authentication successful");
             break;
 
         case EventType::AUTH_FAILED:
-            Serial.println("EVENT: Authentication failed");
+            serialLog("[EVENT] Authentication failed");
             break;
+
         case EventType::SOS_TRIGGERED:
-            Serial.println("EVENT: SOS triggered");
+            serialLog("[EVENT] SOS triggered");
+            break;
+
+        default:
+            serialLog("[EVENT] Unknown event");
             break;
     }
 }

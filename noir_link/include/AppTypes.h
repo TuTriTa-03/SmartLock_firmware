@@ -9,20 +9,27 @@ enum class DoorState : uint8_t {
     UNLOCKED
 };
 
-// 2. AuthResult
+
+// 2. Authentication Result
 enum class AuthResult : uint8_t {
     SUCCESS,
     FAILED,
     LOCKED_OUT
 };
 
-// 3. Type of Event 
+// 3. System Event
 enum class EventType : uint8_t {
     DOOR_LOCKED,
     DOOR_UNLOCKED,
     AUTH_SUCCESS,
     AUTH_FAILED,
-    SOS_TRIGGERED
+    SOS_TRIGGERED,
+    AUTH_LOCKED_OUT
+};
+
+enum class DoorCommand : uint8_t {
+    UNLOCK,
+    LOCK
 };
 
 #endif // APP_TYPES_H

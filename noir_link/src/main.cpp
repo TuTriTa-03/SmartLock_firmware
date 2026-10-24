@@ -1,9 +1,12 @@
 
 #include <Arduino.h>
 
+#include "SerialLogger.h"
+#include "AppTasks.h"
 #include "AccessManager.h"
 #include "EventManager.h"
 #include "DoorController.h"
+#include "AppConfig.h"
 
 // Cac doi tuong dung chung
 EventManager eventManager;
@@ -15,61 +18,86 @@ void setup()
     Serial.begin(115200);
     delay(10000);
 
-    Serial.println();
-    Serial.println("=== NOIR HOME MODULE TEST ===");
+    if (!beginSerialLogger())
+    {
+        Serial.println("[FATAL] Cannot initialize SerialLogger");
+
+        while (true)
+        {
+            delay(1000);
+        }
+    }
+
+    serialLog("=== NOIR HOME RTOS STARTING ===");
 
     accessManager.begin();
     doorController.begin();
 
-    // Test 1: PIN dung -> mo cua
-    Serial.println("\n[Test 1] Correct PIN");
-
-    AuthResult result = accessManager.authenticatePin("123456");
-
-    Serial.print("Result: ");
-    Serial.println(static_cast<int>(result));
-
-    if (result == AuthResult::SUCCESS)
+    if (!startAppTasks())
     {
-        doorController.unlock();
+        serialLog("[FATAL] Cannot start application tasks");
+
+        while (true)
+        {
+            delay(1000);
+        }
     }
 
-    // Test 2: Cho cua tu khoa sau 5 giay
-    Serial.println("\n[Test 2] Auto-lock after 5 seconds");
+    serialLog("[MAIN] Application tasks started");
 
-    while (doorController.getState() == DoorState::UNLOCKED)
+    // Buoc 1: Gui 5 PIN sai de kich hoat lockout
+    serialLog("[TEST] Starting lockout test");
+
+    for (int i = 1; i <= AppConfig::MAX_FAILED_ATTEMPTS; i++)
     {
-        doorController.update();
-        delay(50);
+        serialLog("[TEST] Sending incorrect PIN");
+
+        if (requestPinAuthentication("000000"))
+        {
+            serialLog("[TEST] Incorrect PIN queued");
+        }
+        else
+        {
+            serialLog("[TEST] Failed to queue incorrect PIN");
+        }
+
+        delay(200);
     }
 
-    Serial.println("[TEST] Auto-lock test completed");
+    // Cho AccessTask xu ly cac request truoc khi gui tiep
+    delay(500);
 
-    // Test 3: Nhap sai den gioi han
-    Serial.println("\n[Test 3] Failed attempts limit");
+    // Buoc 2: Thu PIN dung trong thoi gian lockout
+    serialLog("[TEST] Sending correct PIN during lockout");
 
-    for (int i = 1; i <= 5; i++)
+    if (requestPinAuthentication("123456"))
     {
-        result = accessManager.authenticatePin("000000");
-
-        Serial.print("Attempt ");
-        Serial.print(i);
-        Serial.print(", result: ");
-        Serial.println(static_cast<int>(result));
+        serialLog("[TEST] Correct PIN request queued");
     }
 
-    // Test 4: Thu PIN dung khi dang bi khoa
-    Serial.println("\n[Test 4] Correct PIN during lockout");
+    // Cho AccessTask xu ly request
+    delay(500);
 
-    result = accessManager.authenticatePin("123456");
+    // Buoc 3: Cho lockout het han
+    serialLog("[TEST] Waiting for lockout to expire");
+    delay(AppConfig::AUTH_LOCKOUT_DURATION_MS + 1000);
 
-    Serial.print("Result: ");
-    Serial.println(static_cast<int>(result));
+    // Buoc 4: Thu lai PIN dung sau lockout
+    serialLog("[TEST] Retesting correct PIN after lockout");
 
-    Serial.println("\n=== TESTS COMPLETED ===");
+    if (requestPinAuthentication("123456"))
+    {
+        serialLog("[TEST] Final PIN request queued");
+    }
+    else
+    {
+        serialLog("[TEST] Failed to queue final PIN request");
+    }
+
+    serialLog("[TEST] Lockout test sequence completed");
 }
 
 void loop()
 {
-    accessManager.update();
+    delay(1000);
 }

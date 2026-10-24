@@ -54,6 +54,8 @@ AuthResult AccessManager::authenticatePin(const char *pin)
 
         Serial.println("[AUTH] Too many failed attempts");
 
+        eventManager.recordEvent(EventType::AUTH_LOCKED_OUT);
+
         return AuthResult::FAILED;
     }
 
